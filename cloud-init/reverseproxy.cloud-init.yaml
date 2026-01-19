@@ -1,0 +1,27 @@
+#cloud-config
+package_update: true
+package_upgrade: true
+
+packages:
+  - nginx
+  - openssl
+  - git
+
+runcmd:
+  # Clone the repository
+  - git clone https://github.com/cloudhelden-09-25/nodejs-react-reverse-proxy.git /opt/app
+  # Create SSL directory and generate certificate
+  - mkdir -p /etc/nginx/ssl
+  - |
+    openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+      -keyout /etc/nginx/ssl/reverseproxy.key \
+      -out /etc/nginx/ssl/reverseproxy.crt \
+      -subj "/C=DE/ST=Germany/L=Local/O=Cloudhelden/CN=reverseproxy.cloudhelden.local" \
+      -addext "subjectAltName=DNS:reverseproxy.cloudhelden.local,DNS:localhost"
+  - chmod 600 /etc/nginx/ssl/reverseproxy.key
+  - chmod 644 /etc/nginx/ssl/reverseproxy.crt
+  # Copy nginx config from repo (will be updated with IPs by start.sh)
+  - cp /opt/app/nginx/nginx.conf /etc/nginx/sites-available/reverseproxy
+  # Enable the reverse proxy site
+  - rm -f /etc/nginx/sites-enabled/default
+  - ln -sf /etc/nginx/sites-available/reverseproxy /etc/nginx/sites-enabled/reverseproxy
