@@ -16,8 +16,8 @@ runcmd:
     openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
       -keyout /etc/nginx/ssl/reverseproxy.key \
       -out /etc/nginx/ssl/reverseproxy.crt \
-      -subj "/C=DE/ST=Germany/L=Local/O=Cloudhelden/CN=reverseproxy.cloudhelden.local" \
-      -addext "subjectAltName=DNS:reverseproxy.cloudhelden.local,DNS:localhost"
+      -subj "/C=DE/ST=Germany/L=Local/O=Cloudhelden/CN=proxy.ch.internal" \
+      -addext "subjectAltName=DNS:proxy.ch.internal,DNS:localhost"
   - chmod 600 /etc/nginx/ssl/reverseproxy.key
   - chmod 644 /etc/nginx/ssl/reverseproxy.crt
   # Copy nginx config from repo (will be updated with IPs by start.sh)

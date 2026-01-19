@@ -95,32 +95,10 @@ multipass exec ci-reverseproxy -- sudo systemctl restart nginx
 echo -e "${GREEN}Nginx Konfiguration aktualisiert und neu gestartet${NC}"
 
 echo ""
-echo "=== Schritt 5: Services prüfen ==="
+echo "=== Schritt 5: VM Status ==="
 echo ""
 
-# Backend Service prüfen
-echo -n "Backend Service: "
-if multipass exec ci-backend -- systemctl is-active backend.service &>/dev/null; then
-    echo -e "${GREEN}läuft${NC}"
-else
-    echo -e "${RED}nicht aktiv${NC}"
-fi
-
-# Frontend Nginx prüfen
-echo -n "Frontend Nginx: "
-if multipass exec ci-frontend -- systemctl is-active nginx &>/dev/null; then
-    echo -e "${GREEN}läuft${NC}"
-else
-    echo -e "${RED}nicht aktiv${NC}"
-fi
-
-# Reverse Proxy Nginx prüfen
-echo -n "Reverse Proxy Nginx: "
-if multipass exec ci-reverseproxy -- systemctl is-active nginx &>/dev/null; then
-    echo -e "${GREEN}läuft${NC}"
-else
-    echo -e "${RED}nicht aktiv${NC}"
-fi
+multipass list | grep -E "^(Name|ci-)"
 
 echo ""
 echo "=== Schritt 6: SSL-Zertifikat exportieren ==="
