@@ -26,8 +26,8 @@ write_files:
     permissions: '0644'
 
 runcmd:
-  # Install Node.js 20.x LTS
-  - curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+  # Install Node.js 24.x LTS
+  - curl -fsSL https://deb.nodesource.com/setup_24.x | bash -
   - apt-get install -y nodejs
   # Clone the repository
   - git clone https://github.com/cloudhelden-09-25/nodejs-react-reverse-proxy.git /opt/app
