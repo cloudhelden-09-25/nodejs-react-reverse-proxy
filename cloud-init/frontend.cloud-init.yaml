@@ -32,7 +32,7 @@ runcmd:
   # Clone the repository
   - git clone https://github.com/cloudhelden-09-25/nodejs-react-reverse-proxy.git /opt/app
   # Install dependencies and build
-  - cd /opt/app/frontend && npm install
+  - cd /opt/app/frontend && npm ci
   - cd /opt/app/frontend && npm run build
   # Copy build output to nginx directory
   - mkdir -p /var/www/frontend

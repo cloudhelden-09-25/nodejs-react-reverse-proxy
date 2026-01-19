@@ -1,0 +1,30 @@
+config:
+  tls:
+    rejectUnauthorized: false
+  target: https://proxy.ch.internal
+  phases:
+    - duration: 60
+      arrivalRate: 1
+      rampTo: 5
+      name: Warm up phase
+    - duration: 60
+      arrivalRate: 5
+      rampTo: 10
+      name: Ramp up load
+    - duration: 30
+      arrivalRate: 10
+      rampTo: 30
+      name: Spike phase
+  # Load & configure a couple of useful plugins
+  # https://artillery.io/docs/reference/extensions
+
+scenarios:
+  - flow:
+      - loop:
+          - get:
+              url: '/'
+          - get:
+              url: '/api/info'
+          - get:
+              url: '/api/health'
+        count: 100
