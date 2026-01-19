@@ -43,6 +43,10 @@ app.post('/api/echo', (req, res) => {
   });
 });
 
+app.get('/api/test', (req, res) => {
+  res.send('Test was successful!');
+});
+
 // Start server
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server is running on http://0.0.0.0:${PORT}`);
